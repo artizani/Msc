@@ -29,6 +29,8 @@ https://towardsdatascience.com/exploratory-data-analysis-8fc1cb20fd15
 
 Repo
 
+## Deep Learning Financial data
+https://www.hardikp.com/2018/02/11/why-is-machine-learning-in-finance-so-hard/#partially-observable-markov-decision-process
 
 
 ============================
