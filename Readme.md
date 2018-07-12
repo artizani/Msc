@@ -2,7 +2,7 @@
 ## Tutorial Reading
 https://towardsdatascience.com/back-propagation-414ec0043d7
 https://towardsdatascience.com/deep-learning-basic-mathematics-for-deep-learning-a82981e95e3b
-https://towardsdatascience.com/deep-learning-feedforward-neural-network-26a6705dbdc7https://towardsdatascience.com/deep-learning-feedforward-neural-network-26a6705dbdc7
+https://towardsdatascience.com/deep-learning-feedforward-neural-network-26a6705dbdc7https://towardsdatascience.com/deep-learning-feedforward-neural-network-26a6705dbdc7   
 http://neuralnetworksanddeeplearning.com/chap1.html
 https://towardsdatascience.com/deep-learning-d5fe55326e57
 https://medium.com/@shridhar743/a-beginners-guide-to-deep-learning-5ee814cf7706
