@@ -1,0 +1,97 @@
+Private Sub CommandButton1_Click()
+Dim order As Integer
+Dim coeff() As Double
+Dim diag_coeff() As Double
+Dim derived_rhs() As Double
+Dim xvalue() As Double
+Dim lastx As Double
+Dim rhs As Integer
+Set wkb = ActiveWorkbook
+Dim sheet As String
+Dim flag As Integer
+Dim tolerance As Double
+
+sheet = "Problem 1"
+order = Sheets(sheet).Cells(1, 2)
+tolerance = 1E-32
+
+ReDim coeff(1 To order, 1 To order + 1)
+
+ReDim derived_rhs(1 To order + 1)
+ReDim xvalue(1 To order + 1)
+
+
+For Row = 1 To order ' step 1
+    For Column = 1 To order
+        coeff(Row, Column) = Sheets(sheet).Cells(Row + 1, Column)
+    Next Column
+   ' rhs(Row) = Sheets(sheet).Cells(Row + 1, order + 2)
+   'read the right hand side into the coeff matrix to make partial pivoting
+   'easier to compute
+    coeff(Row, order + 1) = Sheets(sheet).Cells(Row + 1, order + 2)
+    xvalue(Row) = Sheets(sheet).Cells(8, order)
+Next Row
+'copy original matrix before attempting to swap for diagonal dominance
+'this is not necessarry, its to eanable testing, so I can compare initial matrix
+'diagonal domionant matrix after swapping the equation in the matrix
+
+diag_coeff() = coeff()
+
+'partial pivot
+For Row = 1 To order ' step 1
+    For Column = Row + 1 To order
+         If Abs(diag_coeff(Row, Row)) < Abs(diag_coeff(Column, Row)) Then
+             For Element = 1 To order + 1
+                 Dim temp As Integer
+                 temp = diag_coeff(Row, Element)
+                 diag_coeff(Row, Element) = diag_coeff(Column, Element)
+                 diag_coeff(Column, Element) = temp
+             Next Element
+        End If
+    Next Column
+Next Row
+
+Dim total As Integer
+Dim totals As Integer
+Do While flag < 50
+lastx = 0
+rhs = order + 1 'index position of right hand side in the coefficient matrix
+    Dim printer As String
+    Dim xsum As Double
+    
+    For i = 1 To order
+        xsum = diag_coeff(i, rhs)
+        
+            For j = 1 To order
+                If j <> i Then
+                    xsum = xsum - (diag_coeff(i, j) * xvalue(j))
+                   
+                End If
+                
+                xvalue(i) = (1 / diag_coeff(i, i)) * xsum
+                'Debug.Print i; " " & xvalue(i)
+                'If check < (Abs(xvalue(i)) - Abs(lastx)) Then
+                '   Debug.Print "true"
+                'End If
+                Debug.Print xvalue(i)
+                If Abs(xvalue(i) - lastx) > tolerance Then
+                     'Debug.Print (Abs(xvalue(Row)) - Abs(lastx))
+                     flag = flag + 1
+                     total = total + 1
+                End If
+                
+                lastx = xvalue(i)
+                check = (Abs(xvalue(Row)) - Abs(lastx))
+                totals = totals + 1
+            Next j
+    Next i
+Loop
+Debug.Print total
+Debug.Print totals
+'PrintArray xvalue, ActiveWorkbook.Worksheets(sheet).[A100]
+End Sub
+
+'-2.0009  -0.001 -1 1.0008  2.9999  2.0006
+Sub PrintArray(Data As Variant, Cl As Range)
+    Cl.Resize(UBound(Data, 1), UBound(Data, 2)) = Data
+End Sub
